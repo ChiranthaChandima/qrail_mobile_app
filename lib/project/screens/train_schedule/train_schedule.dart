@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:qrail_fp/data/fare_data.dart';
 import 'package:qrail_fp/project/screens/train_schedule/ticket_summary.dart';
 
-
 class TrainSchedule extends StatefulWidget {
   const TrainSchedule({super.key});
 
@@ -12,9 +11,7 @@ class TrainSchedule extends StatefulWidget {
 }
 
 class _TrainScheduleState extends State<TrainSchedule> {
-
   final _formKey = GlobalKey<FormState>();
-
   String? _startStation;
   String? _endStation;
   DateTime? _selectedDate;
@@ -23,22 +20,18 @@ class _TrainScheduleState extends State<TrainSchedule> {
   double _farePerPassenger = 0.0; // Initialize fare to 0
 
   List<String> stationList = [
-    'Colombo', 'Kelaniya', 'Gampaha', 'Ragama', 'Kandy', 
+    'Colombo', 'Kelaniya', 'Gampaha', 'Ragama', 'Kandy',
     'Hunupitiya', 'Galle', 'Polgahawela', 'Weyangoda'
   ];
 
-   void _updateFare() {
+  void _updateFare() {
     setState(() {
       if (_startStation != null && _endStation != null && _startStation != _endStation) {
-
         _farePerPassenger = fareData[_startStation]![_endStation] ?? 0.0; // Fetch fare from data
-      _payButtonEnabled = true;
-
+        _payButtonEnabled = true;
       } else {
-
         _farePerPassenger = 0.0;
         _payButtonEnabled = false;
-
       }
     });
   }
@@ -50,7 +43,7 @@ class _TrainScheduleState extends State<TrainSchedule> {
     });
   }
 
-   void _decrementPassenger() {
+  void _decrementPassenger() {
     if (_passengerCount > 1) {
       setState(() {
         _passengerCount--;
@@ -58,7 +51,6 @@ class _TrainScheduleState extends State<TrainSchedule> {
       });
     }
   }
-
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -73,27 +65,27 @@ class _TrainScheduleState extends State<TrainSchedule> {
       });
     }
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-      appBar: AppBar(title: const Text('Buy Tickets'), centerTitle: true, backgroundColor: Colors.blueGrey),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>
-            [
-              _buildContainer(),
-              const SizedBox(height: 20.0),
-              _buildPayButton(),
-            ],
+        appBar: AppBar(title: const Text('Buy Tickets'), centerTitle: true, backgroundColor: Colors.blueGrey),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                _buildContainer(),
+                const SizedBox(height: 20.0),
+                _buildPayButton(),
+              ],
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 
   Widget _buildContainer() {
@@ -142,7 +134,7 @@ class _TrainScheduleState extends State<TrainSchedule> {
     );
   }
 
-   Widget _buildStationDropdown({
+  Widget _buildStationDropdown({
     required String label,
     String? value,
     required ValueChanged<String?> onChanged,
@@ -200,7 +192,7 @@ class _TrainScheduleState extends State<TrainSchedule> {
     );
   }
 
-Widget _buildPassengerCounter() {
+  Widget _buildPassengerCounter() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -243,22 +235,28 @@ Widget _buildPassengerCounter() {
           onPressed: _payButtonEnabled
               ? () {
                   double totalFare = _farePerPassenger * _passengerCount;
-                // Navigate to the TicketSummaryPage with relevant details
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TicketSummaryPage(
-                      fromStation: _startStation ?? '', // Pass the selected start station
-                      toStation: _endStation ?? '', // Pass the selected end station
-                      travelDate: _selectedDate != null
-                          ? DateFormat('yyyy-MM-dd').format(_selectedDate!)
-                          : '', // Pass the selected travel date
-                      passengerCount: _passengerCount, // Pass the number of passengers
-                      totalCost: totalFare, // Pass the total fare
-                    ),
-                  ),
-                );
-              }
+
+                  // Show the TicketSummaryPage in a modal dialog
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: TicketSummaryPage(
+                          fromStation: _startStation ?? '', // Pass the selected start station
+                          toStation: _endStation ?? '', // Pass the selected end station
+                          travelDate: _selectedDate != null
+                              ? DateFormat('yyyy-MM-dd').format(_selectedDate!)
+                              : '', // Pass the selected travel date
+                          passengerCount: _passengerCount, // Pass the number of passengers
+                          totalCost: totalFare, // Pass the total fare
+                        ),
+                      );
+                    },
+                  );
+                }
               : null,
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blueGrey,
@@ -275,6 +273,4 @@ Widget _buildPassengerCounter() {
       ),
     );
   }
-
-
 }
