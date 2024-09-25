@@ -3,7 +3,7 @@ import 'package:qrail_fp/project/screens/Booking/route_screen.dart';
 import 'package:qrail_fp/project/screens/Booking/train_screen.dart';
 
 class BookingTabBar extends StatefulWidget {
-  const BookingTabBar({Key? key}) : super(key: key);
+  const BookingTabBar({super.key});
 
   @override
   State<BookingTabBar> createState() => _BookingTabBarState();

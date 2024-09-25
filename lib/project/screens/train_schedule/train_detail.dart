@@ -9,12 +9,12 @@ class TrainDetailsScreen extends StatelessWidget {
   // final String endStationName;
 
   const TrainDetailsScreen({
-    Key? key,
+    super.key,
     required this.startStation,
     required this.endStation,
     // required this.startStationName,
     // required this.endStationName,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +44,6 @@ class TrainDetailsScreen extends StatelessWidget {
                     builder: (context) => CheckoutScreen(
                       startStation: startStation,
                       endStation: endStation,
-                      // startStationName: startStationName,
-                      // endStationName: endStationName,
                       train: train,
                     ),
                   ),

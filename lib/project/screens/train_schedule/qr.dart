@@ -7,7 +7,7 @@ import 'package:qrail_fp/data/train.dart';
 class QrScreen2 extends StatelessWidget {
   final TrainItem data;
 
-  const QrScreen2({Key? key, required this.data}) : super(key: key);
+  const QrScreen2({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {

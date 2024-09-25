@@ -7,8 +7,7 @@ import 'package:qrail_fp/project/screens/widgets/field.dart';
 class RouteScreen extends StatefulWidget {
   final Function onNavigateToTrain;
 
-  const RouteScreen({Key? key, required this.onNavigateToTrain})
-      : super(key: key);
+  const RouteScreen({super.key, required this.onNavigateToTrain});
 
   @override
   State<RouteScreen> createState() => _RouteScreenState();

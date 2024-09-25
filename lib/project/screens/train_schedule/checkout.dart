@@ -13,13 +13,12 @@ class CheckoutScreen extends StatefulWidget {
   final Map<String, String> train;
 
   const CheckoutScreen(
-      {Key? key,
+      {super.key,
       required this.startStation,
       required this.endStation,
       //   required this.startStationName,
       // required this.endStationName,
-      required this.train})
-      : super(key: key);
+      required this.train});
 
   @override
   _CheckoutScreenState createState() => _CheckoutScreenState();

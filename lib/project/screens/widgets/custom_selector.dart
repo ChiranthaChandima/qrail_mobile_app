@@ -5,10 +5,10 @@ class CustomOptionSelector extends StatefulWidget {
   final Function(CustomOptionSelectorData?)? onOptionClicked;
 
   const CustomOptionSelector({
-    Key? key,
+    super.key,
     required this.options,
     this.onOptionClicked,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomOptionSelector> createState() => _CustomOptionSelectorState();

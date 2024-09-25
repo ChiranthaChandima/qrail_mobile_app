@@ -7,7 +7,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 class QrScreen extends StatelessWidget {
   final ScheduleItem data;
 
-  const QrScreen({Key? key, required this.data}) : super(key: key);
+  const QrScreen({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
